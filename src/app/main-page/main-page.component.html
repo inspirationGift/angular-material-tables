@@ -1,0 +1,32 @@
+<!--<p>hello</p>-->
+<div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>GDS</th>
+      <th>PCC</th>
+      <th>Country</th>
+      <th>IATA</th>
+      <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let oid of oids; let ind = index">
+      <th>{{ind + 1}}</th>
+      <td>{{oid.gds}}</td>
+      <td>{{oid.oid}}</td>
+      <td>{{oid.country}}</td>
+      <td>{{oid.iata}}</td>
+      <div *ngIf="oid.online==1">
+        <td>Online</td>
+      </div>
+      <div *ngIf="oid.online==0">
+        <td>Offline</td>
+      </div>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

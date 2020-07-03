@@ -1,0 +1,30 @@
+table {
+  width: 100%;
+  font-size: 12px;
+  table-layout: fixed;
+
+}
+
+td, th, tr {
+  //border: 1px dotted gray;
+  //width: 100px;
+  overflow: hidden;
+  text-align: left;
+
+  .spec {
+    max-width: 200px;
+    width: 100px;
+  }
+  .spec-id {
+    max-width: 150px;
+    width: 70px;
+  }
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+
+

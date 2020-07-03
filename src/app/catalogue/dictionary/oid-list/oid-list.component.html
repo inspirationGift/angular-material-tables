@@ -1,0 +1,117 @@
+<div class="container">
+  <app-addons (oidPostShare)="search($event)"
+              (add-pop-up)="openDialogAddOid()"></app-addons>
+  <div>
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+
+      <div *ngIf="displayedColumns; let a">
+
+        <!--      id-->
+        <ng-container matColumnDef="id">
+          <th class="spec-id" mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let row; let i=dataIndex"> {{i}} </td>
+        </ng-container>
+
+        <!-- country Country -->
+        <ng-container matColumnDef="{{a[0]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+          <td mat-cell *matCellDef="let row"> {{ row.countryCode }} </td>
+        </ng-container>
+
+        <!-- gds Column -->
+        <ng-container matColumnDef="{{a[1]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>GDS</th>
+          <td mat-cell *matCellDef="let row"> {{row.gdsCode }} </td>
+        </ng-container>
+
+        <!-- oid Column -->
+        <ng-container matColumnDef="{{a[2]}}">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>PCC</th>
+          <td mat-cell *matCellDef="let row"> {{row.oid}}</td>
+        </ng-container>
+
+        <!-- type Column -->
+        <ng-container matColumnDef="{{a[3]}}">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+          <td mat-cell *matCellDef="let row">
+            <div *ngIf="row.type===1">Online</div>
+            <div *ngIf="row.type===0">Offline</div>
+          </td>
+        </ng-container>
+
+        <!-- belong Column -->
+        <ng-container matColumnDef="{{a[4]}}">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Belong</th>
+          <td mat-cell *matCellDef="let row"> {{row.belong}} </td>
+        </ng-container>
+
+        <!-- assign Column -->
+        <ng-container matColumnDef="{{a[5]}}">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Assign</th>
+          <td mat-cell *matCellDef="let row"> {{row.assign}} </td>
+        </ng-container>
+
+        <!-- status Column -->
+        <ng-container matColumnDef="{{a[6]}}">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">{{row.statusName}}</td>
+        </ng-container>
+
+        <!-- purpose Column -->
+        <!--        <ng-container matColumnDef="{{a[7]}}">-->
+        <!--          <th mat-header-cell *matHeaderCellDef mat-sort-header>Purpose</th>-->
+        <!--          <td mat-cell *matCellDef="let row"> {{row.purpose}} </td>-->
+        <!--        </ng-container>-->
+
+        <!-- Edit Column -->
+        <ng-container matColumnDef="{{a[7]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef>Edit</th>
+          <td mat-cell *matCellDef="let row; let i=dataIndex">
+            <!--edit-->
+            <svg class="bi bi-pencil-square" width="1.5em" height="1em"
+                 viewBox="0 0 16 16" fill="blue" xmlns="http://www.w3.org/2000/svg" (click)="openDialogEditOid(row)">
+              <path
+                d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z"
+                    clip-rule="evenodd"/>
+            </svg>
+
+            <svg class="bi bi-list" width="1.5em" height="1.5em" viewBox="0 0 20 20"
+                 fill="green" xmlns="http://www.w3.org/2000/svg" (click)="open(row,i,'details')"
+            >
+              <path fill-rule="evenodd"
+                    d="M4.5 13.5A.5.5 0 015 13h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-4A.5.5 0 015 9h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-4A.5.5 0 015 5h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5z"
+                    clip-rule="evenodd"/>
+            </svg>
+
+          </td>
+        </ng-container>
+
+        <!--        Expanded row-->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let row; let i =dataIndex" [attr.colspan]="a.length">
+            <div *ngIf="i===rowShow && rowShowOption==='details'">
+              <app-oid-details [oid]="row"></app-oid-details>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="a"></tr>
+        <tr mat-row *matRowDef="let row; columns: a"></tr>
+        <tr mat-row *matRowDef="let row; let i=dataIndex; columns: ['expandedDetail'];"
+            [hidden]="(i!==rowShow)"></tr>
+
+      </div>
+
+    </table>
+
+    <mat-paginator [length]="dataSource?.oidPageNum" [pageSize]="10"
+                   [pageSizeOptions]="[10, 20, 30, 100]"></mat-paginator>
+    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</div>
+
+

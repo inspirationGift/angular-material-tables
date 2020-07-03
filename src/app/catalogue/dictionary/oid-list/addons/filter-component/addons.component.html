@@ -1,0 +1,123 @@
+<table class="custom-table-non-visible">
+  <tr>
+    <td>
+      <div data-toggle="collapse" data-target="#collapseExample"
+           aria-expanded="false"
+           aria-controls="collapseExample"
+           align="left">
+        <svg class="bi bi-funnel-fill" width="1em" height="1.5em" viewBox="0 0 16 16" fill="blue"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 3.5v-2h12v2l-4.5 5v5l-3 1v-6L2 3.5z"/>
+          <path fill-rule="evenodd"
+                d="M1.5 1.5A.5.5 0 012 1h12a.5.5 0 01.5.5v2a.5.5 0 01-.128.334L10 8.692V13.5a.5.5 0 01-.342.474l-3 1A.5.5 0 016 14.5V8.692L1.628 3.834A.5.5 0 011.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 017 8.5v5.306l2-.666V8.5a.5.5 0 01.128-.334L13.5 3.308V2h-11z"
+                clip-rule="evenodd"/>
+        </svg>
+      </div>
+    </td>
+    <td>
+      <div align="right">
+        <svg class="bi bi-plus-circle" width="1em" height="1.5em" viewBox="0 0 16 16" fill="green"
+             xmlns="http://www.w3.org/2000/svg"
+             (click)="popUpNewOid()"
+        >
+          <path fill-rule="evenodd" d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
+                clip-rule="evenodd"/>
+          <path fill-rule="evenodd" d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
+                clip-rule="evenodd"/>
+          <path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z"
+                clip-rule="evenodd"/>
+        </svg>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<form [formGroup]="form" (ngSubmit)="submit()" (reset)="reset()">
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+      <div class="addon-select">
+        <div class="addon-select-child">
+
+          <!--          Country-->
+          <mat-form-field class="el el-add">
+            <input matInput placeholder="Country"
+                   (keyup)="countryInclude()"
+                   (ngModelChange)="gdsList()"
+                   formControlName="country"
+                   [matAutocomplete]="a1">
+            <mat-autocomplete #a1="matAutocomplete">
+              <mat-option class="option-class" *ngFor="let cn of countryVal" [value]="cn.countryCode">
+                {{cn.countryCode + ' - ' + cn.countryName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <!--          Gds-->
+          <mat-form-field class="el el-add">
+            <input matInput placeholder="Gds"
+                   (keyup)="gdsInclude()"
+                   (ngModelChange)="countryList()"
+                   formControlName="gds"
+                   [matAutocomplete]="a2">
+            <mat-autocomplete #a2="matAutocomplete">
+              <mat-option class="option-class" *ngFor="let cn of gdsVal" [value]="cn.gdsCode">
+                {{cn.gdsCode + ' - ' + cn.gdsName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+
+          <!--          online type-->
+          <mat-form-field class="el">
+            <mat-label>Type</mat-label>
+            <mat-select matNativeControl
+                        formControlName="online"
+                        name="*">
+              <mat-option selected value="">*</mat-option>
+              <mat-option *ngFor="let elm of dropDown.onlineType" [value]="elm.val">
+                {{elm.opt}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!--          Reason-->
+          <mat-form-field class="el el-add">
+            <input matInput placeholder="Project Name"
+                   (keyup)="reasonCheck()"
+                   formControlName="reason"
+                   [matAutocomplete]="a3">
+            <mat-autocomplete #a3="matAutocomplete">
+              <mat-option class="option-class" *ngFor="let cn of oidReasons" [value]="cn.reason">
+                {{cn.reason }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <!--          Status-->
+          <mat-form-field class="el">
+            <mat-label>Status</mat-label>
+            <mat-select matNativeControl formControlName="activeStatus">
+              <mat-option *ngFor="let elm of dropDown.activeStatus" [value]="elm.opt">
+                {{elm.opt}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!--          Oid-->
+
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-primary-el" type="submit"
+                [disabled]="form.pristine ">Search
+        </button>
+        <button class="btn btn-primary-el" type="reset"
+                [disabled]="form.pristine "
+        >Reset
+        </button>
+      </div>
+
+    </div>
+  </div>
+</form>

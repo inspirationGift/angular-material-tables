@@ -1,0 +1,134 @@
+<div class="container">
+
+  <app-access-filter (eventShare)="search($event)"
+                     [filtersOid]="fieldToPost"
+  ></app-access-filter>
+
+  <div>
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+      <!--      id-->
+      <div *ngIf="displayedColumns; let a">
+
+        <ng-container matColumnDef="{{a[0]}}">
+          <th class="spec-id" mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row;let i=dataIndex"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- country Country -->
+        <ng-container matColumnDef="{{a[1]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+          <td mat-cell *matCellDef="let row"> {{ row.countryCode }} </td>
+        </ng-container>
+
+        <!-- gds Column -->
+        <ng-container matColumnDef="{{a[2]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>GDS</th>
+          <td mat-cell *matCellDef="let row"> {{row.gdsCode }} </td>
+        </ng-container>
+
+        <!-- oid Column -->
+        <ng-container matColumnDef="{{a[3]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>PCC</th>
+          <td mat-cell *matCellDef="let row"> {{row.oid}} </td>
+        </ng-container>
+
+        <!-- access -->
+        <ng-container matColumnDef="{{a[4]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>Terminal</th>
+          <td mat-cell *matCellDef="let row"> {{row.terminal}} </td>
+        </ng-container>
+
+        <!-- status Column -->
+        <ng-container matColumnDef="{{a[5]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row"> {{row.statusName}} </td>
+        </ng-container>
+
+        <!-- oidsResponsible Column -->
+        <ng-container matColumnDef="{{a[6]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>Responsible</th>
+          <td mat-cell *matCellDef="let row"> {{row.responsible}} </td>
+        </ng-container>
+
+        <!-- oidsResponsible Column -->
+        <ng-container matColumnDef="{{a[7]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+          <td mat-cell *matCellDef="let row"> {{row.department}} </td>
+        </ng-container>
+
+        <!-- Description-->
+        <ng-container matColumnDef="{{a[8]}}">
+          <th class="spec" mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+          <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+        </ng-container>
+
+        <!-- Functions-->
+        <ng-container matColumnDef="{{a[9]}}">
+          <th class="spec-id" mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let row;let i=dataIndex">
+
+            <svg class="bi bi-list" width="1.5em" height="1.5em" viewBox="0 0 20 20"
+                 fill="green" xmlns="http://www.w3.org/2000/svg" (click)="open(row,i,'details')"
+            >
+              <path fill-rule="evenodd"
+                    d="M4.5 13.5A.5.5 0 015 13h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-4A.5.5 0 015 9h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0-4A.5.5 0 015 5h10a.5.5 0 010 1H5a.5.5 0 01-.5-.5z"
+                    clip-rule="evenodd"/>
+            </svg>
+
+            <svg class="bi bi-wrench" width="1.5em" height="1em" viewBox="0 0 20 20" fill="blue"
+                 xmlns="http://www.w3.org/2000/svg" (click)="open(row,i,'edit')">
+              <path fill-rule="evenodd"
+                    d="M2.102 4.223A3.004 3.004 0 005 8c.27 0 .532-.036.78-.103l6.342 6.252A3.003 3.003 0 0015 18a3 3 0 10-.851-5.878L7.897 5.781A3.004 3.004 0 004.223 2.1l2.141 2.142L6 6l-1.757.364-2.141-2.141zm13.37 9.019L15 13l-.471.242-.529.026-.287.445-.445.287-.026.529L13 15l.242.471.026.529.445.287.287.445.529.026L15 17l.471-.242.529-.026.287-.445.445-.287.026-.529L17 15l-.242-.471-.026-.529-.445-.287-.287-.445-.529-.026z"
+                    clip-rule="evenodd"></path>
+            </svg>
+
+            <svg class="bi bi-x" width="1.5em" height="1.5em" viewBox="0 0 20 20" fill="red"
+                 xmlns="http://www.w3.org/2000/svg" (click)="open(row,i,'delete')">
+              <path fill-rule="evenodd"
+                    d="M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"
+                    clip-rule="evenodd"/>
+              <path fill-rule="evenodd"
+                    d="M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"
+                    clip-rule="evenodd"/>
+            </svg>
+          </td>
+        </ng-container>
+
+        <!--  Expanded Content Column - The detail row is made up of this one column that spans across all columns-->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let row; let i=dataIndex;" [attr.colspan]="a.length">
+            <div class="card card-body">
+              <div class="addon-select">
+                <div class="addon-select-child">
+
+                  <div *ngIf="i===rowShow && rowShowOption==='details'">
+                    <app-access-details></app-access-details>
+                  </div>
+                  <div *ngIf="i===rowShow && rowShowOption==='edit'">
+                    <app-edit-access [oidAccess]="row" (close)="collapse()"></app-edit-access>
+                  </div>
+                  <div *ngIf="i===rowShow && rowShowOption==='delete'">
+                    <app-access-delete></app-access-delete>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="a"></tr>
+        <tr mat-row *matRowDef="let row; columns: a;"></tr>
+        <tr mat-row *matRowDef="let row; let i=dataIndex; columns: ['expandedDetail'];"
+            [hidden]="(i!==rowShow)"></tr>
+
+      </div>
+    </table>
+    <mat-paginator [length]="dataSource ?.oidAccessPages" [pageSize]="10"
+                   [pageSizeOptions]="[10, 20, 30, 100]"></mat-paginator>
+    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</div>

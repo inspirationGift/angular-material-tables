@@ -1,0 +1,261 @@
+<!--<div class="card">-->
+<div>Add new PCC</div>
+
+<form [formGroup]="form" (submit)="submit()" (reset)="reset()">
+  <mat-dialog-content class="mat-typography mat-body-1">
+    <table class="custom-table-non-visible">
+      <tr>
+        <td>
+          <!--            field #1 PCC-->
+          <div class="example-form" [ngClass]="{invalid: form.get('pcc').touched && form.get('pcc').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="PCC" aria-label="Number" matInput required formControlName="pcc">
+            </mat-form-field>
+            <div
+              *ngIf="form.get('pcc').touched && form.get('pcc').invalid "
+              class="validation">
+              <small *ngIf="form.get('pcc').errors">
+                alphanumeric 15 or less symbols only!
+              </small>
+            </div>
+          </div>
+          <!--            field #2 Country-->
+          <div class="example-form" [ngClass]="{invalid: form.get('country').touched && form.get('country').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Country" aria-label="Number" matInput
+                     (keyup)="checkCountry()"
+                     formControlName="country"
+                     [matAutocomplete]="a2">
+              <mat-autocomplete #a2="matAutocomplete">
+                <mat-option *ngFor="let cn of countryVal" [value]="cn.countryCode">
+                  {{cn.countryCode + ' - ' + cn.countryName}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div
+              *ngIf="form.get('country').touched && form.get('country').invalid"
+              class="validation"
+            >
+              <small *ngIf="form.get('country').errors">
+                alphabetic 2 symbols only!
+              </small>
+            </div>
+          </div>
+          <!--            field #11 CountryName-->
+          <div class="example-form"
+               [hidden]="isCountry()"
+               [ngClass]="{invalid: form.get('countryName').touched && form.get('countryName').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Country Name" aria-label="Number"
+                     matInput
+                     formControlName="countryName">
+            </mat-form-field>
+            <div class="validation"
+                 *ngIf="form.get('countryName').touched && form.get('countryName').invalid">
+              <small *ngIf="form.get('countryName').errors">
+                alphabetic 20 symbols only!
+              </small>
+            </div>
+          </div>
+          <!--            field #3 GDS-->
+          <div class="example-form" [ngClass]="{invalid: form.get('gds').touched && form.get('gds').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="GDS" aria-label="Number"
+                     matInput
+                     required
+                     formControlName="gds"
+                     (keyup)="checkGds()"
+                     [matAutocomplete]="a1">
+              <mat-autocomplete #a1="matAutocomplete">
+                <mat-option class="myClass" *ngFor="let gds of gdsVal" [value]="gds.gdsCode.toUpperCase()">
+                  {{gds.gdsCode + ' - ' + gds.gdsName}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div
+              *ngIf="form.get('gds').touched && form.get('gds').invalid"
+              class="validation"
+            >
+              <small *ngIf="form.get('gds').errors">
+                alphanumeric 2 symbols only!
+              </small>
+            </div>
+          </div>
+          <!--            field #11 GDSName-->
+          <div class="example-form"
+               [hidden]="isGds()"
+               [ngClass]="{invalid: form.get('gdsName').touched && form.get('gdsName').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="GDS Name" aria-label="Number"
+                     matInput
+                     formControlName="gdsName">
+            </mat-form-field>
+            <div class="validation"
+                 *ngIf="form.get('gdsName').touched && form.get('gdsName').invalid">
+              <small *ngIf="form.get('gdsName').errors">
+                alphabetic 15 symbols only!
+              </small>
+            </div>
+          </div>
+          <!--            field #7 Belong-->
+          <div class="example-form" [ngClass]="{invalid: form.get('belong').touched && form.get('belong').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Belong" aria-label="Number"
+                     matInput
+                     required
+                     formControlName="belong"
+                     (keyup)="oidEntityCheck(form.controls.belong.value)"
+                     [matAutocomplete]="a7"
+              >
+              <mat-autocomplete #a7="matAutocomplete">
+                <mat-option class="myClass" *ngFor="let val of oidEntityVal" [value]="val.entity">
+                  {{val.entity}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div
+              *ngIf="form.get('belong').touched && form.get('belong').invalid"
+              class="validation"
+            >
+              <small *ngIf="form.get('belong').errors">
+                alphabetic symbols only!
+              </small>
+            </div>
+          </div>
+          <!--            field #8 Assign-->
+          <div class="example-form" [ngClass]="{invalid: form.get('assign').touched && form.get('assign').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Assigned" aria-label="Number"
+                     matInput
+                     required
+                     defaultValue="'Tickets'"
+                     formControlName="assign"
+                     (keyup)="oidEntityCheck(form.controls.assign.value)"
+                     [matAutocomplete]="a8">
+              <mat-autocomplete #a8="matAutocomplete">
+                <mat-option class="myClass" *ngFor="let val of oidEntityVal" [value]="val.entity">
+                  {{val.entity}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div
+              *ngIf="form.get('assign').touched && form.get('assign').invalid"
+              class="validation"
+            >
+              <small *ngIf="form.get('assign').errors">
+                alphabetic symbols only!
+              </small>
+            </div>
+          </div>
+
+        </td>
+        <td>
+          <!--            field #4 IATA-->
+          <div class="example-form" [ngClass]="{invalid: form.get('iata').touched && form.get('iata').invalid}">
+            <mat-form-field class="example-full-width">
+              <input class="myClass" type="text" placeholder="IATA" aria-label="Number" matInput required
+                     formControlName="iata">
+            </mat-form-field>
+            <div *ngIf="form.get('iata').touched && form.get('iata').invalid"
+                 class="validation"
+            >
+              <small *ngIf="form.get('iata').errors">
+                alphanumeric 5 to 15 symbols only!
+              </small>
+            </div>
+          </div>
+          <!--            field #5 Type-->
+          <div class="example-form" [ngClass]="{invalid: form.get('online').touched && form.get('online').invalid}">
+            <mat-form-field class="example-full-width">
+              <mat-label>Type</mat-label>
+              <select class="myClass14px" matNativeControl required formControlName="online">
+                <option value=""></option>
+                <option *ngFor="let sts of dropDown.onlineType" [value]="sts.val">
+                  {{sts.opt}}
+                </option>
+              </select>
+            </mat-form-field>
+
+            <div *ngIf="form.get('online').touched && form.get('online').invalid"
+                 class="validation"
+            >
+              <small *ngIf="form.get('online').errors">
+                please choose the type!
+              </small>
+            </div>
+          </div>
+          <!--            field #6 Status-->
+          <div class="example-form" [ngClass]="{invalid: form.get('status').touched && form.get('status').invalid}">
+            <mat-form-field class="example-full-width">
+              <mat-label>Status</mat-label>
+              <select class="myClass14px"
+                      matNativeControl
+                      required
+                      formControlName="status">
+                <option value=""></option>
+                <option *ngFor="let sts of  status" [value]="sts.opt">
+                  {{sts.opt}}
+                </option>
+              </select>
+            </mat-form-field>
+            <div *ngIf="form.get('status').touched && form.get('status').invalid"
+                 class="validation">
+              <small *ngIf="form.get('status').errors">
+                Please choose status!
+              </small>
+            </div>
+          </div>
+          <!--            field #9 Reason-->
+          <div class="example-form" [ngClass]="{invalid: form.get('reason').touched && form.get('reason').invalid}">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Project Name" aria-label="Number"
+                     matInput
+                     required
+                     formControlName="reason"
+                     (keyup)="reasonCheck()"
+                     [matAutocomplete]="a9"
+              >
+              <mat-autocomplete #a9="matAutocomplete">
+                <mat-option class="myClass" *ngFor="let gds of reasonVal" [value]="gds.reason">
+                  {{gds.reason}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div *ngIf="form.get('reason').touched && form.get('reason').invalid"
+                 class="validation">
+              <small *ngIf="form.get('reason').errors">
+                Please indicate segments accounting model (abc only)!
+              </small>
+            </div>
+          </div>
+          <!--            field #10 Comment-->
+          <div class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>Leave a comment</mat-label>
+              <textarea class="myClass" matInput placeholder="Please mention the keywords! "
+                        formControlName="comment"></textarea>
+            </mat-form-field>
+
+          </div>
+
+        </td>
+      </tr>
+    </table>
+  </mat-dialog-content>
+
+  <div>
+    <button class="btn btn-primary-el" type="submit"
+            [disabled]="form.pristine">Add
+    </button>
+    <button class="btn btn-primary-el" type="reset"
+            [disabled]="form.pristine">Reset
+    </button>
+    <button class="btn btn-primary-el" type="button" (click)="close()">Close</button>
+  </div>
+
+</form>
+
+
+<!--</div>-->
+
+

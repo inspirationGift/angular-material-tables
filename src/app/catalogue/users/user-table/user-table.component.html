@@ -1,0 +1,27 @@
+<div *ngIf="myUser$ | async as myUsers; else loading">
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let myUser of myUsers; let inx = index">
+      <td>{{inx + 1}}</td>
+      <td>{{myUser.name}}</td>
+      <td>{{myUser.surname}}</td>
+      <td>{{myUser.email}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>

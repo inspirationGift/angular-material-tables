@@ -1,0 +1,24 @@
+<mat-dialog-content class="card">
+  <table class="my-custom-table-non-visible">
+    <th>Project Name</th>
+    <th>Comment</th>
+    <th>Accesses</th>
+    <th>More</th>
+    <tr>
+      <td>{{oid.reason}}</td>
+      <td>{{oid.comment}}</td>
+      <td>none</td>
+      <td>
+        <!--            drop into terminals - details-->
+        <svg class="bi bi-three-dots-vertical"
+             width="1.5em" height="1em" viewBox="0 0 16 16"
+             fill="green" xmlns="http://www.w3.org/2000/svg" (click)="openAccessDetails()">
+          <path fill-rule="evenodd"
+                d="M9.5 13a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
+                clip-rule="evenodd"/>
+        </svg>
+      </td>
+    </tr>
+  </table>
+</mat-dialog-content>
+
